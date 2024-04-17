@@ -53,4 +53,13 @@ config_node(){
     sed -i -e "s|$sm_pass_pattern|$sm_pass_new|" "$RED5_HOME/conf/cluster.xml"
 }
 
+install_crowdstrike_falconsensor(){
+      cd /tmp/
+      sudo curl -o /tmp/falcon-sensor_7.13.0-16604_amd64.deb https://pxb-public-assets.s3.amazonaws.com/installers/falcon-sensor_7.13.0-16604_amd64.deb
+      sudo dpkg -i falcon-sensor_7.13.0-16604_amd64.deb
+      sudo /opt/CrowdStrike/falconctl -s --cid=B5C2D39EE4BD4F0B92A44523FF317F16-BA --tags="Measured,prod,Node,Red5,PXB"
+      sudo systemctl restart falcon-sensor
+}
+
 config_node
+install_crowdstrike_falconsensor

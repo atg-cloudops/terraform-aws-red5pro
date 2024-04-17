@@ -292,6 +292,14 @@ config_mysql(){
     fi
 }
 
+install_crowdstrike_falconsensor(){
+      cd /tmp/
+      sudo curl -o /tmp/falcon-sensor_7.13.0-16604_amd64.deb https://pxb-public-assets.s3.amazonaws.com/installers/falcon-sensor_7.13.0-16604_amd64.deb
+      sudo dpkg -i falcon-sensor_7.13.0-16604_amd64.deb
+      sudo /opt/CrowdStrike/falconctl -s --cid=B5C2D39EE4BD4F0B92A44523FF317F16-BA --tags="Measured,prod,StreamManager,Red5,PXB"
+      sudo systemctl restart falcon-sensor
+}
+
 install_sm
 config_sm_applicationContext
 config_sm_cors
@@ -299,4 +307,4 @@ config_whip_whep
 config_sm_properties_main
 config_sm_properties_aws
 config_mysql
-
+install_crowdstrike_falconsensor
